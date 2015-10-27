@@ -5,6 +5,6 @@ class TopicsController < ApplicationController
 
   def get_categories
     @topic_id = params[:id] 
-    render json: Topic.all 
+    render json: Category.find_by_topic_id(@topic_id)
   end
 end

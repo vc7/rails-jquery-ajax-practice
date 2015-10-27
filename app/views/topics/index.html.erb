@@ -17,8 +17,22 @@
 		</td>
 	</tr>
 	<% end %>
+	<button id="btn">btn</button>
 </table>
 
 <script type="text/javascript">
-
+$("#btn").click(function() {
+$.ajax({
+	type: "POST",
+	contentType: "application/json; charset=utf-8",
+  url: "/topics/get_categories",
+  data: JSON.stringify({id:1}),
+  dataType: "json",
+  success: function (result) {
+    console.log(result);
+  },
+  error: function () {
+  }
+});
+});
 </script>

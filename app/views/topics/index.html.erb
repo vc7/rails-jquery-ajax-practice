@@ -1,0 +1,24 @@
+<h1>Topics</h1>
+
+<table  width="100%">
+	<tr>
+		<th width="50%">Topic</th>
+		<th width="50%">Category</th>
+	</tr>
+	<% @topics.each do |topic| %>
+	<tr>
+		<td>
+			<%= topic.name %>
+		</td>
+		<td>
+			<% topic.categories.each do |category| %>
+				<span><%= category.name %> </span>
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+
+<script type="text/javascript">
+
+</script>

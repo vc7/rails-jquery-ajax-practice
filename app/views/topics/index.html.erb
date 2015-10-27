@@ -22,20 +22,23 @@
 	<button id="btn">btn</button>
 </table>
 
-<select id="topics">
+<select id="topic">
   <% @topics.each do |topic| %>
     <option value="<%= topic.id %>"><%= topic.name %></option>
   <% end %>
 </select>
 
+<select id="category">
+</select>
+
 
 <script type="text/javascript">
-$('#topics').change( function() {
-  var topic_id = $('#topics').val() 
+$('#topic').change( function() {
+  var topic_id = $( this ).val() 
   console.log(topic_id);
-  request_categories_by_topic_id(topic_id);
+  request_categories_by_topic_id(topic_id, update_category_options);
 });
-var request_categories_by_topic_id = function (topic_id) {
+var request_categories_by_topic_id = function (topic_id, callback) {
 $.ajax({
 	type: "POST",
 	contentType: "application/json; charset=utf-8",
@@ -44,9 +47,16 @@ $.ajax({
   dataType: "json",
   success: function (result) {
     console.log(result);
+    callback(result);
   },
   error: function () {
   }
 });
 }
+
+var update_category_options = function (categories) {
+  $("#category").empty();
+  $("#category").append("<option value='" + categories[0]["id"] + "'>"+ categories[0]["name"] +"</option");
+}
+
 </script>

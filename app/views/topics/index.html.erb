@@ -2,8 +2,9 @@
 
 <table  width="100%">
 	<tr>
-		<th width="50%">Topic</th>
-		<th width="50%">Category</th>
+		<th width="45%">Topic</th>
+		<th width="45%">Category</th>
+		<th width="10%">Fetch</th>
 	</tr>
 	<% @topics.each do |topic| %>
 	<tr>
@@ -15,18 +16,31 @@
 				<span><%= category.name %> </span>
 			<% end %>
 		</td>
+<td><button onclick="request_categories_by_topic_id(<%= topic.id %>)">Fetch</button></td>
 	</tr>
 	<% end %>
 	<button id="btn">btn</button>
 </table>
 
+<select id="topics">
+  <% @topics.each do |topic| %>
+    <option value="<%= topic.id %>"><%= topic.name %></option>
+  <% end %>
+</select>
+
+
 <script type="text/javascript">
-$("#btn").click(function() {
+$('#topics').change( function() {
+  var topic_id = $('#topics').val() 
+  console.log(topic_id);
+  request_categories_by_topic_id(topic_id);
+});
+var request_categories_by_topic_id = function (topic_id) {
 $.ajax({
 	type: "POST",
 	contentType: "application/json; charset=utf-8",
   url: "/topics/get_categories",
-  data: JSON.stringify({id:1}),
+  data: JSON.stringify({id:topic_id}),
   dataType: "json",
   success: function (result) {
     console.log(result);
@@ -34,5 +48,5 @@ $.ajax({
   error: function () {
   }
 });
-});
+}
 </script>
